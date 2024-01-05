@@ -5,7 +5,7 @@ def students():
     for i in range(1, num_students + 1):
         name = input(f"Enter student {i}'s name: ")
         dob = input(f"Enter {name}'s date of birth: ")
-        students_data.append({"name": name, "id": i, "dob": dob})
+        students_data.append({"name": name, "id": 'S' + str(i), "dob": dob})
         
     return students_data
 
@@ -15,7 +15,7 @@ def courses():
     
     for i in range(1, num_courses + 1):
         name = input(f"Enter course {i}'s name: ")
-        courses_data.append({"name": name, "id": i})
+        courses_data.append({"name": name, "id": 'C' + str(i)})
         
     return courses_data
 
@@ -25,10 +25,10 @@ def grades(students_data, courses_data):
     
     for student in students_data:
         for course in courses_data:
-            if course['id'] == grades_choose:
+            if course['id'] == 'C' + str(grades_choose):
                 grade = input(f"Enter {student['name']}'s grade for {course['name']}: ")
                 grades_data.append({"student": student, "course": course, "grade": grade})
-                
+
     return grades_data
 
 def print_grades(grades_list):
