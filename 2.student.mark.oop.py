@@ -74,14 +74,11 @@ class StudentsAndGrades:
             self.__courses_data.append(course)
 
     def get_grades(self):
-        grades_choose = int(input("Enter the grade's ID: "))
-
         for student in self.__students_data:
             for course in self.__courses_data:
-                if course.get_course_id() == 'C' + str(grades_choose):
-                    grade = input(f"Enter {student.get_name()}'s grade for {course.get_name()}: ")
-                    grade_obj = Grade(student, course, grade)
-                    self.__grades_data.append(grade_obj)
+                grade = input(f"Enter {student.get_name()}'s grade for {course.get_name()} (Course ID: {course.get_course_id()}): ")
+                grade_obj = Grade(student, course, grade)
+                self.__grades_data.append(grade_obj)
 
     def print_grades(self):
         for grade in self.__grades_data:
@@ -92,4 +89,4 @@ students_and_grades = StudentsAndGrades()
 students_and_grades.get_students()
 students_and_grades.get_courses()
 students_and_grades.get_grades()
-students_and_grades.print_grades() 
+students_and_grades.print_grades()
