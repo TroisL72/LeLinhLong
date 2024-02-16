@@ -76,7 +76,7 @@ class StudentsAndGrades:
     def get_grades(self):
         for student in self.__students_data:
             for course in self.__courses_data:
-                grade = input(f"Enter {student.get_name()}'s grade for {course.get_name()} (Course ID: {course.get_course_id()}): ")
+                grade = float(input(f"Enter {student.get_name()}'s grade for {course.get_name()} (Course ID: {course.get_course_id()}): "))
                 grade_obj = Grade(student, course, grade)
                 self.__grades_data.append(grade_obj)
 
