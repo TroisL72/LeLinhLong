@@ -60,7 +60,7 @@ class StudentsAndGrades:
         for i in range(1, num_students + 1):
             name = input(f"Enter student {i}'s name: ")
             dob = input(f"Enter {name}'s date of birth: ")
-            student_id = 'S' + str(i)
+            student_id = '22BI' + str(i)
             student = Student(name, dob, student_id)
             self.__students_data.append(student)
 
