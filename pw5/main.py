@@ -13,7 +13,7 @@ output_processor.courses_data = input_processor.courses_data
 output_processor.grades_data = input_processor.grades_data 
 
 output_processor.print_grades()
-print("Students list:")
+print("Students list: ")
 output_processor.sort_gpa()
 print()
 
