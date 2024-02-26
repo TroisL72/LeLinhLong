@@ -21,7 +21,6 @@ class Student:
         print(f"ID: {self.__student_id}")
         print(f"DOB: {self.__dob}")
 
-
 class Course:
     def __init__(self, name, course_id, credits):
         self.__name = name
@@ -40,20 +39,6 @@ class Course:
     def display_info(self):
         print(f"Course: {self.__name}")
         print(f"Course ID: {self.__course_id}")
-
-
-class Grade:
-    def __init__(self, student, course, grade):
-        self.__student = student
-        self.__course = course
-        self.__grade = grade
-
-    def display_info(self):
-        self.__student.display_info()
-        self.__course.display_info()
-        print(f"Grade: {self.__grade}")
-        print()
-
 
 class StudentsAndGrades:
     def __init__(self):
@@ -124,7 +109,6 @@ class StudentsAndGrades:
 
         for student, gpa in zip(sorted_students, sorted_gpas):
             print(f"{student.get_name()}'s GPA: {gpa}")
-
 
 students_and_grades = StudentsAndGrades()
 students_and_grades.get_students()
