@@ -22,12 +22,12 @@ class PrintOutput:
         for student_index, student in enumerate(self.students_data):
             print(f"Student: {student.get_name()}")
             print(f"DOB: {student.get_dob()}")
-            print(f"Student's ID: {student.get_student_id()}")  # Fixed syntax error
+            print(f"Student's ID: {student.get_student_id()}")  
             print()
             for course_index, course in enumerate(self.courses_data):
                 print(f"Course: {course.get_name()}")
-                print(f"Course's ID: {course.get_course_id()}")  # Fixed syntax error
-                print(f"Grade: {self.grades_data[student_index][course_index]}")  # Fixed indexing
+                print(f"Course's ID: {course.get_course_id()}")  
+                print(f"Grade: {self.grades_data[student_index][course_index]}") 
             print()
 
     def sort_gpa(self):
