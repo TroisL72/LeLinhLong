@@ -1,119 +1,100 @@
 import math
-import numpy as np
 
 class Student:
-    def __init__(self, name, dob, student_id):
-        self.__name = name
-        self.__dob = dob
-        self.__student_id = student_id
-
+    def __init__(self, name):
+        self._name = name
+    
     def get_name(self):
-        return self.__name
-
-    def get_dob(self):
-        return self.__dob
-
-    def get_student_id(self):
-        return self.__student_id
+        return self._name
 
     def display_info(self):
-        print(f"Name: {self.__name}")
-        print(f"ID: {self.__student_id}")
-        print(f"DOB: {self.__dob}")
+        print(f"Student's name: {self._name}")
 
 class Course:
-    def __init__(self, name, course_id, credits):
-        self.__name = name
-        self.__course_id = course_id
-        self.__credits = credits
+    def __init__(self, name, ects):
+        self._name = name
+        self._ects = ects
 
     def get_name(self):
-        return self.__name
+        return self._name
+    
+    def get_ects(self):
+        return self._ects
+    
+    def display_info(self):
+        print(f"Course's name: {self._name}")
+        print(f"Course's ECTS: {self._ects}")
 
-    def get_course_id(self):
-        return self.__course_id
-
-    def get_credits(self):
-        return self.__credits
+class Grade:
+    def __init__(self, student, course, grade):
+        self._student = student
+        self._course = course
+        self._grade = grade
 
     def display_info(self):
-        print(f"Course: {self.__name}")
-        print(f"Course ID: {self.__course_id}")
+        self._student.display_info()
+        self._course.display_info()
+        print(f"Grade: {self._grade}")
 
-class StudentsAndGrades:
+class PrintOutput:
     def __init__(self):
-        self.__students_data = []
-        self.__courses_data = []
-        self.__grades_data = []
+        self._student_data = []
+        self._course_data = []
+        self._grade_data = []
 
     def get_students(self):
-        num_students = int(input("Enter the number of students: "))
-
-        for i in range(1, num_students + 1):
-            name = input(f"Enter student {i}'s name: ")
-            dob = input(f"Enter {name}'s date of birth: ")
-            student_id = '22BI' + str(i)
-            student = Student(name, dob, student_id)
-            self.__students_data.append(student)
+        num_students = int(input("Number of students: "))
+        for i in range(num_students):
+            ame = input("Enter student's name: ")
+            student = Student(ame)
+            self._student_data.append(student)
 
     def get_courses(self):
-        num_courses = int(input("Enter the number of courses: "))
-
-        for i in range(1, num_courses + 1):
-            name = input(f"Enter course {i}'s name: ")
-            credits = int(input(f"Enter credits for {name}: "))
-            course_id = 'C' + str(i)
-            course = Course(name, course_id, credits)
-            self.__courses_data.append(course)
+        num_courses = int(input("Number of courses: "))
+        for i in range(num_courses):
+            ame = input("Enter course's name: ")
+            cts = int(input("Enter course's ECTS: "))
+            ourse = Course(ame, cts)
+            self._course_data.append(ourse)
 
     def get_grades(self):
-        grades = []
+        for student in self._student_data:
+            for course in self._course_data:
+                grade = float(input(f"Enter {student.get_name()}'s grade for {course.get_name()}: "))
+                floor_grade = math.floor(grade)
+                grade_obj = Grade(student, course, floor_grade)  
+                self._grade_data.append(grade_obj)
 
-        for student in self.__students_data:
-            student_grades = []
+    def calculate_gpa(self):
+        gpa_dict = {}  
+        for student in self._student_data:
+            total_ects = 0
+            total_sum = 0
+            for grade in self._grade_data:
+                if grade._student == student:
+                    total_ects += grade._course.get_ects()
+                    total_sum += grade._grade * grade._course.get_ects()
+            if total_ects != 0:
+                gpa = total_sum / total_ects
+                gpa_dict[student.get_name()] = gpa  
+            else:
+                print(f"{student.get_name()} has no GPA.")
 
-            for course in self.__courses_data:
-                grade = float(input(f"Enter {student.get_name()}'s grade for {course.get_name()} (Course ID: {course.get_course_id()}): "))
-                grade = math.floor(grade)
-                student_grades.append(grade)
+        sorted_gpa = sorted(gpa_dict.items(), key=lambda x: x[1], reverse=True)
 
-            grades.append(student_grades)
+        for student, gpa in sorted_gpa:
+            print(f"{student} GPA: {gpa}")
 
-        self.__grades_data = np.array(grades)
 
-    def calculate_gpa(self, student_index):
-        student_grades = self.__grades_data[student_index]
-        credits = np.array([course.get_credits() for course in self.__courses_data])
-        weighted_sum = np.sum(student_grades * credits)
-        total_credits = np.sum(credits)
-        final_gpa = math.floor(weighted_sum / total_credits)
-        return final_gpa
+    def print_grade(self):
+        for i in self._grade_data:
+            i.display_info()
 
-    def print_grades(self):
-        for student_index, student in enumerate(self.__students_data):
-            print(f"Student: {student.get_name()}")
-            print(f"DOB: {student.get_dob()}")
-            print(f"Student's ID: {student.get_student_id()}")
-            print()
-            for course_index, course in enumerate(self.__courses_data):
-                print(f"Course: {course.get_name()}")
-                print(f"Course's ID: {course.get_course_id()}")
-                print(f"Grade: {self.__grades_data[student_index, course_index]}")
-            print()
-
-    def sort_gpa(self):
-        gpa_list = [self.calculate_gpa(i) for i in range(len(self.__students_data))]
-        sorted_indices = np.argsort(gpa_list)[::-1]
-        sorted_students = [self.__students_data[i] for i in sorted_indices]
-        sorted_gpas = [gpa_list[i] for i in sorted_indices]
-
-        for student, gpa in zip(sorted_students, sorted_gpas):
-            print(f"{student.get_name()}'s GPA: {gpa}")
-
-students_and_grades = StudentsAndGrades()
-students_and_grades.get_students()
-students_and_grades.get_courses()
-students_and_grades.get_grades()
-students_and_grades.print_grades()
-print("Students' list:")
-students_and_grades.sort_gpa()
+if __name__ == '__main__':
+    students_and_grades = PrintOutput()   
+    students_and_grades.get_students()
+    students_and_grades.get_courses()
+    students_and_grades.get_grades()
+    students_and_grades.print_grade()
+    students_and_grades.calculate_gpa()
+    
