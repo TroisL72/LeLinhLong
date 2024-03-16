@@ -1,7 +1,8 @@
-from test.input import GetInput
+from input import GetInput
 import pickle as pk
 import os
 import zipfile
+import threading
 
 class PrintOutput:
     def __init__(self):
@@ -39,6 +40,14 @@ class DataProcess:
             self.course_data = pk.load(file)
         with open("grades.pkl", "rb") as file:
             self.grade_data = pk.load(file)
+
+    def threads(self):
+        t1 = threading.Thread(target=self.zipping, arg=())
+        t1.start()
+        t2 = threading.Thread(target=self.depickling, args=())
+        t2.start()
+        t1.join()
+        t2.join()
 
 
         

@@ -2,7 +2,6 @@ from domain.student import Student
 from domain.course import Course
 from domain.grade import Grade
 import pickle as pk
-import threading 
 
 class GetInput:
     def __init__(self):
@@ -20,16 +19,8 @@ class GetInput:
                     student = Student(name)
                     self.student_data.append(student)
                     pk.dump(student.__dict__, file)
-                    thread = threading.Thread(target=self.save_student_data, args=(student, file))
-                    threads.append(thread)
-                    thread.start()
-                for thread in threads:
-                    thread.join()
         except IOError:
             print('Error in students data')
-
-    def save_student_data(self, student, file):
-        pass
 
     def get_courses(self):
         num_courses = int(input("Number of courses: "))
@@ -42,16 +33,8 @@ class GetInput:
                     course = Course(name, ects)
                     self.course_data.append(course)
                     pk.dump(course.__dict__, file)
-                    thread = threading.Thread(target=self.save_course_data, args=(course, file))
-                    threads.append(thread)
-                    thread.start()
-                for thread in threads:
-                    thread.join()
         except IOError:
             print('Error in course data')
-
-    def save_course_data(self, course, file):
-        pass
 
     def get_grades(self):
         try:
@@ -68,16 +51,8 @@ class GetInput:
                             "grade": grade_obj.grade
                         }
                         pk.dump(pickle_data, file)
-                        thread = threading.Thread(target=self.save_grade_data, args=(pickle_data, file))
-                        threads.append(thread)
-                        thread.start()
-                for thread in threads:
-                    thread.join()
         except IOError:
             print("Error in grades data")
-
-    def save_grade_data(self, pickle_data, file):
-        pass
 
     def calculate_gpa(self):
         gpa_dict = {}  
