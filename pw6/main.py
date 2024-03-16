@@ -1,22 +1,23 @@
 from input import GetInput
-from output import PrintOutput, DataProcessor
+from output import DataProcess
+from output import PrintOutput
 
-input_processor = GetInput()
-input_processor.get_students()
-input_processor.get_courses()
-input_processor.get_grades()
+inp = GetInput()  
+inp.get_students()
+inp.get_courses()
+inp.get_grades()
+inp.calculate_gpa()
 
-output_processor = PrintOutput()
-output_processor.students_data = input_processor.students_data  
-output_processor.courses_data = input_processor.courses_data  
-output_processor.grades_data = input_processor.grades_data 
+out = PrintOutput()
+out.student_data = inp.student_data  
+out.course_data = inp.course_data  
+out.grade_data = inp.grade_data 
+out.print_grade()
 
-output_processor.print_grades()
-print("Students list: ")
-output_processor.sort_gpa()
-print()
+dp = DataProcess()
+dp.student_data = out.student_data
+dp.course_data = out.course_data
+dp.grade_data = out.grade_data
+dp.zipping()
+dp.depickling()
 
-data_processor = DataProcessor()
-print("Check compressing files: ")
-data_processor.compress_files()
-data_processor.check_and_load_data()
